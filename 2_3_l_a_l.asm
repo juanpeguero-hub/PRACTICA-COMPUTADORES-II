@@ -24,26 +24,26 @@ lin_a_lin:
         beq pedir_linea
 
         cmpa #'\n
-        beq enter
+        beq enter_return   
         cmpa #' 
-        beq valido
+        beq caracter_valido
         cmpa #'0
-        blo falla
+        blo falla_linea
         cmpa #'9
-        bls valido
+        bls caracter_valido
         cmpa #'A
-        blo falla
+        blo falla_linea
         cmpa #'Z
-        bls valido
-        bra falla
+        bls caracter_valido
+        bra falla_linea
 
-        valido:
+        caracter_valido:
                 
             sta ,x+
             bra pedir_linea
             ; el caracter es valido, lo guardamos en el registro X y pedimos otro caracter
         
-        enter:
+        enter_return:
             ldy #linea
             clr ,x
             lda #'\n
@@ -51,34 +51,34 @@ lin_a_lin:
             sta pantalla
 
 
-        traduccion:   
+        traduccion_linea:   
                 lda ,y+
                 cmpa #'\0
                 beq fin_linea
                 cmpa #' 
-                beq espacio
+                beq espacio_linea
 
                 cmpa #'9
-                bls es_numero
+                bls es_numero_linea
         
-            es_letra:
+            es_letra_linea:
 
-            suba #'A
-            bra buscar_morse
+                suba #'A
+                bra buscar_morse_linea
 
     
-            es_numero:
+            es_numero_linea:
                 suba #'0
                 adda #26
-                bra buscar_morse 
+                bra buscar_morse_linea
 
-            espacio:
+            espacio_linea:
 
                 lda #' 
                 sta pantalla
-                bra traduccion
+                bra traduccion_linea
 
-            buscar_morse:  
+            buscar_morse_linea:  
 
                 ldx #tabla_morse
                 ldb #6
@@ -88,7 +88,7 @@ lin_a_lin:
                 jsr imprime_cadena
                 
 
-                bra traduccion
+                bra traduccion_linea
 
 
 
@@ -102,7 +102,7 @@ lin_a_lin:
             
             bra nueva_linea
             
-        falla:
+        falla_linea:
             rts
 
         

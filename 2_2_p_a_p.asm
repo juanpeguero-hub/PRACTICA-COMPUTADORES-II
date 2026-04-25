@@ -29,11 +29,11 @@ teclado         .equ 0xFF02
                         cmpa #'  
                         beq espacio
                         cmpa #'0
-                        blo falla
+                        blo falla_car
                         cmpa #'9
                         bls valido
                         cmpa #'A
-                        blo falla
+                        blo falla_car
                         cmpa #'Z
                         bls valido
                         rts
@@ -64,15 +64,15 @@ teclado         .equ 0xFF02
 
 
                         cmpa #'9
-                        bls es_numero
+                        bls es_numero_car
 
 
-                es_letra:
+                es_letra_car:
 
                         suba #'A
                         bra buscar_morse
 
-                es_numero:
+                es_numero_car:
 
                         suba #'0
                         adda #26
@@ -95,7 +95,7 @@ teclado         .equ 0xFF02
                 fin_palabra:
                         bra pal_pal
 
-                falla:
+                falla_car:
                         rts  ;volvemos al menu
 
         
