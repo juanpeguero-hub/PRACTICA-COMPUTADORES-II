@@ -41,7 +41,7 @@ lin_a_lin:
                 
             sta ,x+
             bra pedir_linea
-            ; el caracter es valido, lo guardamos en el registro X y pedimos otro caracter
+            ;el caracter es valido, lo guardamos en el registro X y pedimos otro caracter
         
         enter_return:
             ldy #linea
@@ -57,7 +57,6 @@ lin_a_lin:
                 beq fin_linea
                 cmpa #' 
                 beq espacio_linea
-
                 cmpa #'9
                 bls es_numero_linea
         
@@ -73,9 +72,7 @@ lin_a_lin:
                 bra buscar_morse_linea
 
             espacio_linea:
-
-                lda #' 
-                sta pantalla
+                
                 bra traduccion_linea
 
             buscar_morse_linea:  
@@ -86,6 +83,7 @@ lin_a_lin:
 
                 leax d, x
                 jsr imprime_cadena
+                                
                 
 
                 bra traduccion_linea
@@ -104,5 +102,3 @@ lin_a_lin:
             
         falla_linea:
             rts
-
-        

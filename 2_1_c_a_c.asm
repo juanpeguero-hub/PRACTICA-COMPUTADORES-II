@@ -14,6 +14,19 @@ teclado     .equ 0xFF02
         .globl car_car
 
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;   car_car
+;       recoge un caracter por teclado y lo clasifica para posteriormente
+;       calcular un índice que se va a emplear para buscar su equivalente
+;       en la tabla morse proporcionada 
+;
+;       Entrada: nada 
+;       Salida: void
+;       Registros afectados: A, B, X, S, C.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
     car_car:
         
         lda teclado
@@ -42,7 +55,8 @@ teclado     .equ 0xFF02
 
         tfr a, b
         suba #'0
-        adda #26
+        adda #26 ; como los numeros estan despues de las letras en la tabla, para conseguir el indice estamos sumando
+                 ; 26. Ahora el caracter original esta en B y el indice que hemos creado esta en A
         bra imprimir
         
 
@@ -51,7 +65,8 @@ teclado     .equ 0xFF02
                     ; el caracter original leido de teclado para imprimirlo al lado de su 
                     ; equivalente en morse en la siguiente subrutina
 
-        suba #'A
+        suba #'A    ; restamos el ASCII de la A, que es 65. En este caso, si la letra es una C, 67-65 =2, que es el elemento 2 
+                    ; de la tabla
         
 
 

@@ -62,6 +62,7 @@ m_l_a_l:    .asciz "\n\n 3.3) MORSE A TEXTO (Linea a Linea): \n\n"
             .globl car_car ; subrutina de la opcion 2.1 del menú (caracter a caracter)
             .globl pal_pal ; subrutina de la opcion 2.2 del menú (palabra a palabra)
             .globl lin_a_lin ; subrutina de la opcion 2.3 del menú (línea a línea)
+            .globl m_car_a_car ; subrutina de la opcion 3.1 del menú (caracter a caracter)
 programa: 
 
             lds #0xFF00     ;inicializar la pila
@@ -118,8 +119,7 @@ mostrar_submenu2:
     beq nucleo
     cmpa #'s
     beq nucleo
-    cmpa #'S
-    beq nucleo
+   
 
     
 
@@ -172,12 +172,15 @@ mostrar_submenu3:
         cmpa #'3
         beq m_linea_a_linea
         cmpa #'s
-        beq mostrar_submenu3
+        lbeq nucleo
+        cmpa #'S
+        lbeq nucleo
 
             m_caracter_a_caracter:
             ldx #m_c_a_c
             jsr imprime_cadena
 
+            jsr m_car_a_car
             ;llamada a la subrutina que haga la opcion 3.1 del menú principal
 
             bra mostrar_submenu3
