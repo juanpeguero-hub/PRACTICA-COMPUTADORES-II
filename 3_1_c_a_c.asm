@@ -27,7 +27,9 @@ teclado     .equ 0xFF02
 
 
 
-m_car_a_car:    
+m_car_a_car:  
+
+        
         
         limpiar_bufer: ; apuntamos al bufer, cargamos X con 1 espacio y escribimos lo almacenado en A
                        ; en donde este apuntando X, con incremento de 1 byte

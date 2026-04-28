@@ -63,6 +63,7 @@ m_l_a_l:    .asciz "\n\n 3.3) MORSE A TEXTO (Linea a Linea): \n\n"
             .globl pal_pal ; subrutina de la opcion 2.2 del menú (palabra a palabra)
             .globl lin_a_lin ; subrutina de la opcion 2.3 del menú (línea a línea)
             .globl m_car_a_car ; subrutina de la opcion 3.1 del menú (caracter a caracter)
+            .globl m_pal_a_pal
 programa: 
 
             lds #0xFF00     ;inicializar la pila
@@ -190,7 +191,7 @@ mostrar_submenu3:
             ldx #m_p_a_p
             jsr imprime_cadena
 
-            ; llamada a la subrutina que haga la opcion 3.2 del menú principal
+            jsr m_pal_a_pal; llamada a la subrutina que haga la opcion 3.2 del menú principal
 
             bra mostrar_submenu3
 
@@ -199,7 +200,7 @@ mostrar_submenu3:
             ldx #m_l_a_l
             jsr imprime_cadena
 
-            ; llamada ala subrutna que haga la opcion 3.3 del menu ppal
+            
 
             bra mostrar_submenu3
             

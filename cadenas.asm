@@ -121,3 +121,6 @@ compara:
         compara_fin:
                 puls x,y,d
                 rts
+
+
+;;;;;; SUBRUTUNA DE TRADUCCION, SOBRE TODO PARA LA TERCERA OPCION DEL MENU
