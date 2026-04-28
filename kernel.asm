@@ -1,7 +1,7 @@
-            .module  holamundo
+            .module  kernel
             .include "morse_table.inc"
 
-            .area CODE1 (ABS)
+            
 
             ;definimos las constantes que va a usar el programa
 
@@ -9,7 +9,7 @@ pantalla    .equ    0xFF00
 teclado     .equ    0xFF02
 fin         .equ    0xFF01
 
-            .org    0x1000
+            
             
 
             ; MENU PRINCIPAL
@@ -182,7 +182,7 @@ mostrar_submenu3:
             jsr imprime_cadena
 
             jsr m_car_a_car
-            ;llamada a la subrutina que haga la opcion 3.1 del menú principal
+            
 
             bra mostrar_submenu3
             
@@ -209,6 +209,6 @@ mostrar_submenu3:
     clra 
     sta fin
 
-    .area   PROG(ABS)
+    .area   FIJA(ABS)
     .org    0xFFFE
     .word   programa

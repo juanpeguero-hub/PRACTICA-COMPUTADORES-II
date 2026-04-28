@@ -1,7 +1,6 @@
         .module cadenas
 
-        .area CODE3 (ABS)
-        .org 0x3000
+        
 cadenas_iguales: .asciz "IGUALES"
 cadenas_dif:     .asciz "DISTINTAS"
 

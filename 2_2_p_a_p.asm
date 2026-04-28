@@ -2,8 +2,7 @@
 
         
         
-        .area CODE4 (ABS)
-        .org 0x5000
+        
 
 palabra:        .blkb 100
 max_tam:        .word 0

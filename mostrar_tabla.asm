@@ -1,7 +1,6 @@
                 .module mostrar_tabla
 
-                .area CODE2 (ABS)
-                .org 0x2000
+                
 
     ;constantes del prog
 

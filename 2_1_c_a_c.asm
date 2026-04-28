@@ -1,7 +1,6 @@
         .module c_a_c
 
-        .area CODE3 (ABS)
-        .org 0x4000
+        
 
         ;ctes
 pantalla    .equ 0xFF00

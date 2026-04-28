@@ -1,7 +1,6 @@
     .module l_a_l
 
-    .area CODE5 (ABS)
-    .org 0x6000
+    
 
 linea:   .blkb 100
 

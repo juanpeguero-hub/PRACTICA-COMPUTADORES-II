@@ -1,7 +1,6 @@
         .module m_c_a_c
 
-        .area CODE6 (ABS)
-        .org 0x7000
+        
 
 
 
@@ -65,7 +64,7 @@ m_car_a_car:
         beq fin_ASCII
         cmpa #'\n
         beq fin_ASCII
-        bra error_caracter ; si llega aqui sin saltar a buen_caracter, es que es un caracter invalido 
+        bra error_caracter ; si llega aqui sin saltar a ninguna de las otras subrutinas, es que es un caracter invalido 
                            ; (no es ni punto ni raya ni espacio/enter)
 
 
