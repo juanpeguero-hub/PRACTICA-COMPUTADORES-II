@@ -30,8 +30,8 @@ teclado     .equ 0xFF02
 
 m_car_a_car:    
         
-        limpiar_bufer: ; apuntamos al bufer, cargamos D con 2 espacios y escribimos lo almacenado en D
-                       ; en donde este apuntando X, con incremento de 2 bytes   
+        limpiar_bufer: ; apuntamos al bufer, cargamos X con 1 espacio y escribimos lo almacenado en A
+                       ; en donde este apuntando X, con incremento de 1 byte
 
             ldx #bufer_morse
 
@@ -41,7 +41,6 @@ m_car_a_car:
             sta ,x+
             sta ,x+
             sta ,x+
-            
 
             ldb #'\0 ; terminamos el caracter
             stb ,x      

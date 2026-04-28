@@ -82,6 +82,7 @@ nucleo:     ldx #menu_0
             lbeq acabar
             cmpa #'s
             lbeq acabar
+            bra nucleo
 
             
 
@@ -118,7 +119,7 @@ mostrar_submenu2:
     cmpa #'S
     beq nucleo
     cmpa #'s
-    beq nucleo
+    bra nucleo
    
 
     
@@ -174,7 +175,7 @@ mostrar_submenu3:
         cmpa #'s
         lbeq nucleo
         cmpa #'S
-        lbeq nucleo
+        lbra nucleo
 
             m_caracter_a_caracter:
             ldx #m_c_a_c
