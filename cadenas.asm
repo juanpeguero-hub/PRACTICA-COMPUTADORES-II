@@ -13,7 +13,12 @@ fin         .equ    0xFF01
             .globl imprime_cadena
             .globl compara_cadenas
             .globl compara
-
+            .globl limpiar_bufer
+            .globl traducir_morse
+            .globl tabla_morse_Char ;26
+            .globl tabla_morse_Number ;10
+            .globl tabla_morse_Total ; 36
+            .globl tabla_morse
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -123,4 +128,95 @@ compara:
                 rts
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;   limpiar_bufer
+;
+;       teniendo memoria reservada que funciona como un bufer, 
+;       esta subrutina se encarga de limpiar ese bufer, cargando espacios
+;       en el registro A y copiandolos donde apunte el registro X (al búfer)
+;          
+;       Entrada: puntero a la direccion que se quiera borrar (X)
+;       Salida: void
+;       Registros afectados: A, X
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+limpiar_bufer:
+
+            pshs a, x
+
+            lda #' 
+            sta ,x+
+            sta ,x+
+            sta ,x+
+            sta ,x+
+            sta ,x+
+
+            ldb #'\0 ; terminamos el caracter
+            clr ,x  
+
+            puls a, x
+            rts
+
 ;;;;;; SUBRUTUNA DE TRADUCCION, SOBRE TODO PARA LA TERCERA OPCION DEL MENU
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;   traducir_morse
+;
+;       busca la cadena apuntada por Y en la tabla de morse propopcionada
+;       
+;          
+;       Entrada: Y - direccion de inicio del bufer a traducir
+;       Salida: A - caracter ascii traducido o 0 si hay error
+;       Registros afectados: A.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+traducir_morse:
+
+        pshs x,b
+
+        ldx #tabla_morse
+        ldb #0
+
+        buscar_loop:
+                jsr compara_cadenas ; si A=0 entonces son iguales
+                tsta
+                beq obtener_letra
+
+                leax 6,x
+                incb
+                cmpb tabla_morse_Total
+                blo buscar_loop
+
+                ; si llega aqui es un error
+
+                clra
+                bra fin_trad
+
+
+        obtener_letra:
+
+                cmpb tabla_morse_Char
+                blo its_letra
+                
+                ;aqui es un numero
+                subb tabla_morse_Char
+                addb #'0
+                bra guardar_indice
+
+        its_letra:
+                addb #'A
+
+        guardar_indice:
+                tfr b,a
+
+        fin_trad:
+                puls x,b
+                rts
+        
+                

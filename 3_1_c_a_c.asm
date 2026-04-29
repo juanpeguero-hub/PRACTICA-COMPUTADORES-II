@@ -24,6 +24,9 @@ teclado     .equ 0xFF02
             .globl m_car_a_car
             .globl compara
             .globl compara_cadenas
+            .globl limpiar_bufer
+            .globl traducir_morse
+            
 
 
 
@@ -31,24 +34,12 @@ m_car_a_car:
 
         
         
-        limpiar_bufer: ; apuntamos al bufer, cargamos X con 1 espacio y escribimos lo almacenado en A
+        llamar_bufer: ; apuntamos al bufer, cargamos X con 1 espacio y escribimos lo almacenado en A
                        ; en donde este apuntando X, con incremento de 1 byte
 
             ldx #bufer_morse
-
-            lda #' 
-            sta ,x+
-            sta ,x+
-            sta ,x+
-            sta ,x+
-            sta ,x+
-
-            ldb #'\0 ; terminamos el caracter
-            stb ,x      
-
-            
-        ldx #bufer_morse ; ponemos el puntero otra vez al inicio del bufer
-        ldb #0           ; uso el registro b como contador, inicializandolo a 0
+            jsr limpiar_bufer
+            ldb #0           ; uso el registro b como contador, inicializandolo a 0
 
         
 
@@ -72,23 +63,19 @@ m_car_a_car:
 
          
         fin_ASCII: 
-                ldy #bufer_morse
-                ldx #tabla_morse
-                ldb #0
+           ldy #bufer_morse
+           jsr traducir_morse
 
-                buscar: 
-                        
-                        jsr compara_cadenas
+           tsta
+           beq imprimir_error_valido
 
-                        tsta
-                        beq traduccion
 
-                        leax 6, x ; le sumamos 6 para que empieze en el siguiente caracter de morse para comparar
-                        incb
-                        cmpb #36
-                        blo buscar
-                        cmpb #36
-                        bge imprimir_error_valido
+           sta pantalla
+
+           lda #'\n
+           sta pantalla
+
+           lbra llamar_bufer
 
 
 
@@ -134,29 +121,4 @@ m_car_a_car:
 
                         rts
 
-
-        
-        traduccion: ; tengo en b el caracter con el indice de la tabla
-                    ; ahora hay que imprimir su equivalente, detectando qué es exactamente en b
-                    ; letra o numero
-        
-
-                cmpb #25
-                bls es_let
-                
-                subb #26
-                addb #'0
-                bra fin_trad
-
-                es_let:
-                        addb #'A
-
-
-                fin_trad:
-                        stb pantalla
-
-                        lda #'\n
-                        sta pantalla
-
-                        lbra limpiar_bufer
 
