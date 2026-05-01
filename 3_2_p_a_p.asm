@@ -92,14 +92,16 @@ teclado  .equ 0xFF02
 
         fin_opc:
 
-            tstb
-            beq quit
-
+        tstb
+        beq traducir_palabra
+        
+            traducir_bufer_restante:
             ldy #bufer_morse
             jsr traducir_morse
             tsta
             beq imprimir_error_validoII
 
+            traducir_palabra:
             sta ,u+
             clr ,u
             ldx #palabra
