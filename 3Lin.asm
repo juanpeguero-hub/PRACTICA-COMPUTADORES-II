@@ -1,6 +1,6 @@
-        .module m_p_a_p
+        .module m_l_a_l
 
-palabra: .blkb 100
+linea: .blkb 100
 bufer_morse: .asciz "     "
 limite_car:.byte 5
 
@@ -15,33 +15,34 @@ teclado  .equ 0xFF02
     .globl compara_cadenas
     .globl tabla_morse
     .globl compara
-    .globl m_pal_a_pal
+    .globl m_lin_a_lin
     .globl limpiar_bufer
     .globl traducir_morse
    
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;                                                         ;
-;   m_pal_a_pal                                           ;
+;   traducir_morse_a_texto_linea                          ;
 ;                                                         ;
-;       Se corresponde con la opción de traducir morse    ;
-;       a texto palabra a palabra. Se reserva espacio     ;
-;       para la palabra y el búfer. Posteriormente,       ;
-;       comprueba si se ha introducido un punto/raya,     ;
-;       un espacio, un retorno, o ninguno de los          ;
-;       anteriores, saltando a una subrutina diferente    ;
-;       para cada una de las 4 opciones. Si es un         ;
-;       punto o raya, almacena lo introducido en el       ;
-;       búfer, y comprueba si se ha superado el límite    ;
-;       de símbolos. Si no se ha superado, vuelve a       ;
-;       leer, mientras que si se ha superado, salta un    ;
-;       error por dimensión inválida. Si es un            ;
-;       espacio, comprueba si el anterior fue un          ;
-;       espacio. Si no lo es, traduce lo introducido      ;
-;       en el búfer. Si lo es, imprime la cadena          ;
-;       almacenada en palabra. Si es un enter, traduce    ;
-;       e imprime lo que haya quedado sin traducir.       ;
-;       Si no es ninguno de los anteriores, salta un      ;
-;       error por carácter de entrada inválido.           ;
+;       Se corresponde con la opciOn de traducir morse    ;
+;       a texto lInea a lInea. Se reserva espacio para    ;
+;       la línea y el bUfer. Posteriormente, comprueba    ;
+;       si se ha introducido un punto/raya, un espacio,   ;
+;       un retorno, o ninguno de los anteriores,          ;
+;       saltando a una subrutina diferente para cada      ;
+;       una de las 4 opciones. Si es un punto o raya,     ;
+;       almacena lo introducido en el bUfer, y            ;
+;       comprueba si se ha superado el lImite de          ;
+;       sImbolos. Si no se ha superado, vuelve a leer,    ;
+;       mientras que si se ha superado, salta un error    ;
+;       por dimensión invAlida. Si es un espacio,         ;
+;       comprueba si el anterior fue un espacio. Si no    ;
+;       lo es, traduce lo introducido en el búfer y lo    ;
+;       almacena en lInea. Si lo es, introduce un         ;
+;       espacio en la cadena lInea. Si es un enter,       ;
+;       traduce e imprime la lInea. Si no es ninguno      ;
+;       de los anteriores, salta un error por carActer    ;
+;       de entrada invAlido.                              ;
 ;                                                         ;
 ;       Entrada: nada.                                    ;
 ;       Salida: nada.                                     ;
@@ -49,9 +50,11 @@ teclado  .equ 0xFF02
 ;                                                         ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    m_pal_a_pal:
 
-        ldu #palabra
+
+
+m_lin_a_lin:
+    ldu #linea
         
         lda #'\n
         sta pantalla
@@ -60,7 +63,7 @@ teclado  .equ 0xFF02
         nueva_letra:
             ldx #bufer_morse
             jsr limpiar_bufer
-            ldb #0 ; reiniciamos el contador
+            ldb #0
 
 
         decidir_entrada:
@@ -73,66 +76,53 @@ teclado  .equ 0xFF02
             beq espacio
             cmpa #'\n
             beq fin_opc
-            bra errores
-
-
-
-        valido:
+            bra imprimir_error_carIII
+valido:
 
             sta ,x+
             incb
             cmpb limite_car
-            bhi imprimir_error_dimII
+            bhi imprimir_error_dimIII
 
             bra decidir_entrada
 
 
-        espacio:    ;en espacio, tenemos dos opciones : o se mete otro espacio y 
-                    ;terminamos la palabra y pedimos otra o se mete otro ./- y 
-                    ;continuamos con la traduccion
+        espacio:    
            
            
         tstb
         beq doble_espacio
-        ; si no salto antes, solo hay un espacio, traducimos y pedimos sig.
         
         traduction:
             ldy #bufer_morse
             jsr traducir_morse
 
             tsta 
-            beq imprimir_error_validoII
+            beq imprimir_error_validoIII
 
             sta ,u+
             bra nueva_letra
 
                  
         doble_espacio:
-            clr ,u
-            ldx #palabra
-            jsr imprime_cadena
-
-            lda #' 
-            sta pantalla
-
-            ldu #palabra
-            bra nueva_letra
+            sta ,u+
+            bra nueva_letra 
 
         fin_opc:
 
         tstb
-        beq traducir_palabra
+        beq traducir_linea
         
             traducir_bufer_restante:
             ldy #bufer_morse
             jsr traducir_morse
             tsta
-            beq imprimir_error_validoII
+            beq imprimir_error_validoIII
 
-            traducir_palabra:
+            traducir_linea:
             sta ,u+
             clr ,u
-            ldx #palabra
+            ldx #linea
             jsr imprime_cadena
             bra quit
 
@@ -141,25 +131,23 @@ teclado  .equ 0xFF02
        
         errores:
 
-                ldx #err_car
-                jsr imprime_cadena
-                rts
 
-                imprimir_error_carII:
+
+                imprimir_error_carIII:
                         
                         ldx #err_car
                         jsr imprime_cadena
 
                         rts
 
-                imprimir_error_dimII:
+                imprimir_error_dimIII:
 
                         ldx #err_dim
                         jsr imprime_cadena
 
                         rts
 
-                imprimir_error_validoII:
+                imprimir_error_validoIII:
 
                         ldx #err_val
                         jsr imprime_cadena

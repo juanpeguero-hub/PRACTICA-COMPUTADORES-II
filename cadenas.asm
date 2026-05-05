@@ -19,6 +19,7 @@ fin         .equ    0xFF01
             .globl tabla_morse_Number ;10
             .globl tabla_morse_Total ; 36
             .globl tabla_morse
+            .globl toupper
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -46,18 +47,19 @@ ret_imprime_cadena:
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-;   compara_cadenas
-;
-;       compara la cadena X e Y que deben tener el mismo tamanio
-;       ademas, la cadena de X debe estar terminada por un \0
-;          
-;       Entrada: X-direccion de comienzo de la cadena X
-;                Y-direccion de comienzo de la cadena Y
-;       Salida: A=0 iguales, distinto diferentes
-;       Registros afectados: , CC.
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;                                                         ;
+;   compara_cadenas                                       ;
+;                                                         ;
+;       compara la cadena X e Y que deben tener el        ;
+;       mismo tamanio ademas, la cadena de X debe         ;
+;       estar terminada por un \0                         ;
+;                                                         ;
+;       Entrada: X-direccion de comienzo de la cadena X   ;
+;                Y-direccion de comienzo de la cadena Y   ;
+;       Salida: A=0 iguales, distinto diferentes          ;
+;       Registros afectados: , CC.                        ;
+;                                                         ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 compara_cadenas:
 
@@ -90,19 +92,21 @@ compara_cadenas:
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-;   compara
-;
-;       compara la cadena X e Y que deben tener el mismo tamanio
-;       ademas, la cadena de X debe estar terminada por un \0
-;       y saca por pantalla un mensaje diciendo si son iguales
-;       o distintas
-;          
-;       Entrada: X-direccion de comienzo de la cadena X
-;                Y-direccion de comienzo de la cadena Y
-;       Salida: 
-;       Registros afectados: , CC.
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                                                         ;
+;   compara                                               ;
+;                                                         ;
+;       compara la cadena X e Y que deben tener           ;
+;       el mismo tamanio ademas, la cadena de X           ;
+;       debe estar terminada por un \0 y saca             ;
+;       por pantalla un mensaje diciendo si son           ;
+;       iguales o distintas                               ;
+;                                                         ;
+;       Entrada: X-direccion de comienzo de la cadena X   ;
+;                Y-direccion de comienzo de la cadena Y   ;
+;       Salida:                                           ;
+;       Registros afectados: , CC.                        ;
+;                                                         ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 compara:
 
@@ -129,18 +133,21 @@ compara:
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-;   limpiar_bufer
-;
-;       teniendo memoria reservada que funciona como un bufer, 
-;       esta subrutina se encarga de limpiar ese bufer, cargando espacios
-;       en el registro A y copiandolos donde apunte el registro X (al búfer)
-;          
-;       Entrada: puntero a la direccion que se quiera borrar (X)
-;       Salida: void
-;       Registros afectados: A, X
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;                                                         ;
+;   limpiar_bufer                                         ;
+;                                                         ;
+;       teniendo memoria reservada que funciona como      ;
+;       un bufer, esta subrutina se encarga de limpiar    ;
+;       ese bufer, cargando espacios en el registro A     ;
+;       y copiandolos donde apunte el registro X          ;
+;       (al bufer)                                        ;
+;                                                         ;
+;       Entrada: puntero a la direccion que se quiera     ;
+;                borrar (X)                               ;
+;       Salida: void                                      ;
+;       Registros afectados: A, X                         ;
+;                                                         ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 limpiar_bufer:
 
             pshs a, x
@@ -158,23 +165,27 @@ limpiar_bufer:
             puls a, x
             rts
 
-;;;;;; SUBRUTUNA DE TRADUCCION, SOBRE TODO PARA LA TERCERA OPCION DEL MENU
+
 
 
 
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-;   traducir_morse
-;
-;       busca la cadena apuntada por Y en la tabla de morse propopcionada
-;       
-;          
-;       Entrada: Y - direccion de inicio del bufer a traducir
-;       Salida: A - caracter ascii traducido o 0 si hay error
-;       Registros afectados: A.
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                                                         ;
+;   traducir_morse                                        ;
+;                                                         ;
+;       busca la cadena apuntada por Y en la tabla        ;
+;       de morse proporcionada                            ;
+;                                                         ;
+;       Entrada: Y - direccion de inicio del bufer        ;
+;                a traducir                               ;
+;       Salida:  A - caracter ascii traducido o 0         ;
+;                si hay error                             ;
+;       Registros afectados: A.                           ;
+;                                                         ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 traducir_morse:
 
@@ -218,5 +229,28 @@ traducir_morse:
         fin_trad:
                 puls x,b
                 rts
-        
-                
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                                                         ;
+;   toupper (VERSION ASM)                                 ;
+;                                                         ;
+;       pasa a mayusculas la letra minuscula              ;
+;       introducida por el teclado                        ;
+;                                                         ;
+;       Entrada: A                                        ;
+;       Salida:  A                                        ;
+;                                                         ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        toupper:
+                cmpa #'a
+                blo not_lower
+                cmpa #'z
+                bhi not_lower ; si esta o por encima o por debajo del rango de las letras, no nos intersa
+                suba #32
+
+
+                not_lower:
+                rts

@@ -13,7 +13,7 @@ teclado         .equ 0xFF02
                 .globl imprime_cadena
                 .globl tabla_morse
                 .globl pal_pal
-
+                .globl toupper
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;                                                         ;
@@ -44,6 +44,7 @@ teclado         .equ 0xFF02
 
                 comparar_caracter:
                         lda teclado
+                        jsr toupper
 
                         cmpa #'  
                         beq espacio

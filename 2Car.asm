@@ -11,7 +11,7 @@ teclado     .equ 0xFF02
         .globl imprime_cadena
         .globl tabla_morse
         .globl car_car
-
+        .globl toupper
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;                                                         ;
@@ -34,6 +34,7 @@ teclado     .equ 0xFF02
     car_car:
         
         lda teclado
+        jsr toupper
         
         cmpa #' 
         beq es_espacio 

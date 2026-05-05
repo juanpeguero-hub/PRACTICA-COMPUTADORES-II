@@ -11,6 +11,7 @@ teclado    .equ 0xFF02
             .globl imprime_cadena
             .globl tabla_morse
             .globl lin_a_lin
+            .globl toupper
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -40,6 +41,7 @@ lin_a_lin:
     pedir_linea:
         
         lda teclado
+        jsr toupper
         beq pedir_linea
 
         cmpa #'\n
