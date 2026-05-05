@@ -16,7 +16,7 @@ kernel.asm
 
 
 Contiene las cadenas de los menús, las cabeceras, y los saltos a subrutina dependiendo de qué tecla se haya pulsado.
-Estas subrutinas enseñan la cabecera utilizando una subrutina contenida en cadenas.asm, y entonces saltan a las subrutinas principales de cada función del programa, guardadas en módulos secundarios(mostrar_tabla, 2_1_c_a_c, 2_2_p_a_p, 2_3_l_a_l, 3_1_c_a_c, 3_2_p_a_p, 3_3_l_a_l).
+Estas subrutinas enseñan la cabecera utilizando una subrutina contenida en cadenas.asm, y entonces saltan a las subrutinas principales de cada función del programa, guardadas en módulos secundarios(kernel cadenas 1Mostrar 2Car 2Lin 2Pal 3Pal 3Car 3Lin morse_table).
 A continuación se profundizará en los módulos secundarios.
 Al salir de las subrutinas principales, se vuelve al módulo principal para volver a enseñar el menú.
 También está la subrutina para terminar el programa.
