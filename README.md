@@ -42,8 +42,7 @@ Registros afectados: A, B, X, S.
 
 2Pal:
 
-
-		Se corresponde con la opción de traducir texto a morse palabra a palabra.
+Se corresponde con la opción de traducir texto a morse palabra a palabra.
 La subrutina reserva memoria en la que guardar caracteres de una palabra, que recoge uno a uno.
 Verifica si son válidos: si es válido, se incrementa el índice de la memoria y se guarda el carácter. Si es espacio, se añade un \0, y recorriendo los caracteres desde #palabra hasta el \0, buscamos su traducción al morse.
 Si es inválido, se sale de la traducción.
@@ -67,7 +66,7 @@ Si es inválido, se sale de la traducción.
 3Car:
 
 	
-	Se corresponde con la opción de traducir morse a texto caracter a caracter.
+Se corresponde con la opción de traducir morse a texto caracter a caracter.
 La subrutina reserva espacio para un búfer, y llama a una subrutina en cadenas.asm que lo limpia.
 Posteriormente, comprueba si se ha introducido un punto/raya, un espacio/retorno, o ninguno de los anteriores, saltando a una subrutina diferente para cada una de las 3 opciones.
 Si es un punto o raya, almacena lo introducido en el búfer, y comprueba si se ha superado el límite de símbolos. Si no se ha superado, vuelve a leer, mientras que si se ha superado, salta un error por dimensión inválida.
