@@ -1,5 +1,4 @@
-Juan Peguero García 45138572Z
-Eduardo Márquez Valiente 76743429L
+
 
 
 El código para ensamblar es:
