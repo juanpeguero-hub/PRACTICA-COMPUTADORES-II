@@ -13,17 +13,22 @@ teclado     .equ 0xFF02
         .globl car_car
 
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-;   car_car
-;       recoge un caracter por teclado y lo clasifica para posteriormente
-;       calcular un índice que se va a emplear para buscar su equivalente
-;       en la tabla morse proporcionada 
-;
-;       Entrada: nada 
-;       Salida: void
-;       Registros afectados: A, B, X, S, C.
+;                                                         ;
+;   car_car                                               ;
+;                                                         ;
+;       Se corresponde con la opción de traducir texto    ;
+;       a morse carácter a carácter. La subrutina         ;
+;       recoge un carácter por teclado y lo clasifica     ;
+;       para posteriormente calcular un índice que se     ;
+;       va a emplear para buscar su equivalente en la     ;
+;       tabla morse proporcionada, o en el caso del       ;
+;       espacio, lo cambiará por dos.                     ;
+;                                                         ;
+;       Entrada: nada.                                    ;
+;       Salida: nada.                                     ;
+;       Registros afectados: A, B, X, S.                  ;
+;                                                         ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     car_car:

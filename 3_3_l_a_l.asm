@@ -20,6 +20,36 @@ teclado  .equ 0xFF02
     .globl traducir_morse
    
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                                                         ;
+;   traducir_morse_a_texto_linea                          ;
+;                                                         ;
+;       Se corresponde con la opción de traducir morse    ;
+;       a texto línea a línea. Se reserva espacio para    ;
+;       la línea y el búfer. Posteriormente, comprueba    ;
+;       si se ha introducido un punto/raya, un espacio,   ;
+;       un retorno, o ninguno de los anteriores,          ;
+;       saltando a una subrutina diferente para cada      ;
+;       una de las 4 opciones. Si es un punto o raya,     ;
+;       almacena lo introducido en el búfer, y            ;
+;       comprueba si se ha superado el límite de          ;
+;       símbolos. Si no se ha superado, vuelve a leer,    ;
+;       mientras que si se ha superado, salta un error    ;
+;       por dimensión inválida. Si es un espacio,         ;
+;       comprueba si el anterior fue un espacio. Si no    ;
+;       lo es, traduce lo introducido en el búfer y lo    ;
+;       almacena en línea. Si lo es, introduce un         ;
+;       espacio en la cadena línea. Si es un enter,       ;
+;       traduce e imprime la línea. Si no es ninguno      ;
+;       de los anteriores, salta un error por carácter    ;
+;       de entrada inválido.                              ;
+;                                                         ;
+;       Entrada: nada.                                    ;
+;       Salida: nada.                                     ;
+;       Registros afectados: A, B, X, Y, U.               ;
+;                                                         ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 m_lin_a_lin:
     ldu #linea
@@ -44,7 +74,7 @@ m_lin_a_lin:
             beq espacio
             cmpa #'\n
             beq fin_opc
-            bra errores
+            bra imprimir_error_carIII
 valido:
 
             sta ,x+
@@ -99,9 +129,7 @@ valido:
        
         errores:
 
-                ldx #err_car
-                jsr imprime_cadena
-                rts
+
 
                 imprimir_error_carIII:
                         

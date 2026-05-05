@@ -12,6 +12,26 @@ teclado    .equ 0xFF02
             .globl tabla_morse
             .globl lin_a_lin
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                                                         ;
+;   lin_a_lin                                             ;
+;                                                         ;
+;       Se corresponde con la opción de traducir texto    ;
+;       a morse línea a línea. La subrutina reserva       ;
+;       memoria para guardar caracteres de una línea      ;
+;       recogidos uno a uno. Verifica si son válidos:     ;
+;       si lo es, incrementa el índice y guarda el        ;
+;       carácter. Si es enter/return, añade un \0 y       ;
+;       traduce desde #linea hasta el fin de cadena.      ;
+;       Si es inválido, se sale de la traducción.         ;
+;                                                         ;
+;       Entrada: nada.                                    ;
+;       Salida: nada.                                     ;
+;       Registros afectados: A, B, X, Y.                  ;
+;                                                         ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 lin_a_lin:
 
     nueva_linea:    

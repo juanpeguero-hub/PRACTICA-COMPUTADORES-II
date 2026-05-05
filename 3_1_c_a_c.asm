@@ -27,7 +27,48 @@ teclado     .equ 0xFF02
             .globl limpiar_bufer
             .globl traducir_morse
             
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                                                         ;
+;   m_car_a_car                                           ;
+;                                                         ;
+;       Se corresponde con la opción de traducir morse    ;
+;       a texto caracter a caracter. La subrutina         ;
+;       reserva espacio para un búfer, y llama a una      ;
+;       subrutina en cadenas.asm que lo limpia.           ;
+;       Posteriormente, comprueba si se ha introducido    ;
+;       un punto/raya, un espacio/retorno, o ninguno      ;
+;       de los anteriores, saltando a una subrutina       ;
+;       diferente para cada una de las 3 opciones.        ;
+;       Si es un punto o raya, almacena lo introducido    ;
+;       en el búfer, y comprueba si se ha superado el     ;
+;       límite de símbolos. Si no se ha superado,         ;
+;       vuelve a leer, mientras que si se ha superado,    ;
+;       salta un error por dimensión inválida.            ;
+;       Si es un espacio o retorno, llama a una           ;
+;       subrutina en cadenas.asm que busca la cadena      ;
+;       en la tabla. Si no la encuentra, salta un         ;
+;       error de código inválido. Si es un carácter       ;
+;       inválido, salta un mensaje de error.              ;
+;       Para traducir, comprueba si el índice de          ;
+;       cadenas por las que ha tenido que buscar          ;
+;       corresponde con una letra o un número, y lo       ;
+;       convierte en el ASCII que corresponde. Por        ;
+;       último, vuelve a la línea donde se llama a la     ;
+;       subrutina que limpia el búfer. Posteriormente,    ;
+;       comprueba si se ha introducido un punto o         ;
+;       raya. Si es así, lo guarda en el búfer,           ;
+;       verificando que no se haya superado el límite     ;
+;       de 5 símbolos. Si es un espacio o retorno,        ;
+;       traduce el carácter guardado en el búfer. Si      ;
+;       no es ninguno de los anteriores, salta a una      ;
+;       subrutina que enseña el mensaje de error para     ;
+;       carácteres inválidos.                             ;
+;                                                         ;
+;       Entrada: nada.                                    ;
+;       Salida: nada.                                     ;
+;       Registros afectados: A, B, X, Y.                  ;
+;                                                         ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 m_car_a_car:  

@@ -15,6 +15,26 @@ teclado         .equ 0xFF02
                 .globl pal_pal
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                                                         ;
+;   pal_pal                                               ;
+;                                                         ;
+;       Se corresponde con la opción de traducir texto    ;
+;       a morse palabra a palabra. La subrutina reserva   ;
+;       memoria para guardar caracteres de una palabra    ;
+;       recogidos uno a uno. Verifica si son válidos:     ;
+;       si lo es, incrementa el índice y guarda el        ;
+;       carácter. Si es espacio, añade un \0 y traduce    ;
+;       desde #palabra hasta el fin de cadena. Si es      ;
+;       inválido, finaliza la traducción.                 ;
+;                                                         ;
+;       Entrada: nada.                                    ;
+;       Salida: nada.                                     ;
+;       Registros afectados: A, B, X, Y, S.               ;
+;                                                         ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
         pal_pal:
                 
                         ldx #palabra

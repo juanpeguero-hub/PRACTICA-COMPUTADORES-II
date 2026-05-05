@@ -19,7 +19,35 @@ teclado  .equ 0xFF02
     .globl limpiar_bufer
     .globl traducir_morse
    
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                                                         ;
+;   m_pal_a_pal                                           ;
+;                                                         ;
+;       Se corresponde con la opción de traducir morse    ;
+;       a texto palabra a palabra. Se reserva espacio     ;
+;       para la palabra y el búfer. Posteriormente,       ;
+;       comprueba si se ha introducido un punto/raya,     ;
+;       un espacio, un retorno, o ninguno de los          ;
+;       anteriores, saltando a una subrutina diferente    ;
+;       para cada una de las 4 opciones. Si es un         ;
+;       punto o raya, almacena lo introducido en el       ;
+;       búfer, y comprueba si se ha superado el límite    ;
+;       de símbolos. Si no se ha superado, vuelve a       ;
+;       leer, mientras que si se ha superado, salta un    ;
+;       error por dimensión inválida. Si es un            ;
+;       espacio, comprueba si el anterior fue un          ;
+;       espacio. Si no lo es, traduce lo introducido      ;
+;       en el búfer. Si lo es, imprime la cadena          ;
+;       almacenada en palabra. Si es un enter, traduce    ;
+;       e imprime lo que haya quedado sin traducir.       ;
+;       Si no es ninguno de los anteriores, salta un      ;
+;       error por carácter de entrada inválido.           ;
+;                                                         ;
+;       Entrada: nada.                                    ;
+;       Salida: nada.                                     ;
+;       Registros afectados: A, B, X, Y, U.               ;
+;                                                         ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     m_pal_a_pal:
 
